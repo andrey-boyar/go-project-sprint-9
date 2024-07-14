@@ -27,7 +27,7 @@ func Generator(ctx context.Context, ch chan<- int64, fn func(int64)) {
 
 // Worker читает число из канала in и пишет его в канал out.
 func Worker(in <-chan int64, out chan<- int64) {
-	// 2. Функция Worker	// ...
+	// 2. Функция Worker
 	for num := range in {
 		out <- num
 		time.Sleep(1 * time.Millisecond)
@@ -38,7 +38,7 @@ func Worker(in <-chan int64, out chan<- int64) {
 func main() {
 	chIn := make(chan int64)
 
-	// 3. Создание контекста	// ...
+	// 3. Создание контекста
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
 
@@ -69,7 +69,7 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(NumOut)
 
-	// 4. Собираем числа из каналов outs 	// ...
+	// 4. Собираем числа из каналов outs
 	for i := 0; i < NumOut; i++ {
 		go func(in <-chan int64, i int) {
 			defer wg.Done()
@@ -90,7 +90,7 @@ func main() {
 	var count int64 // количество чисел результирующего канала
 	var sum int64   // сумма чисел результирующего канала
 
-	// 5. Читаем числа из результирующего канала 	// ...
+	// 5. Читаем числа из результирующего канала
 	for num := range chOut {
 		count++
 		sum += num
